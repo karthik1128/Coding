@@ -1,0 +1,30 @@
+class Solution(object):
+    def isValidSudoku(self, board):
+        def is_valid_block(block):
+             seen = set()
+             for row in block:
+                 for num in row:
+                     if num != ".":
+                         if num in seen:
+                             return False
+                         seen.add(num)
+             return True
+
+        # Check each row
+        for row in board:
+             if not is_valid_block([row]):
+                 return False 
+
+        # Check each column
+        for col in range(9):
+             if not is_valid_block([board[row][col] for row in range(9)]):
+                 return False
+
+        # Check each 3 x 3 sub-box
+        for i in range(0, 9, 3):
+             for j in range(0, 9, 3):
+                 block = [board[x][y] for x in range(i, i+3) for y in range(j, j+3)]
+                 if not is_valid_block([block]):
+                     return False
+
+        return True
