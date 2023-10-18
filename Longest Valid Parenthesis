@@ -1,0 +1,19 @@
+class Solution(object):
+    def longestValidParentheses(self, s):
+        stack = [-1]     # Initialize stack with -1 to represent the base index
+        max_length = 0
+
+        for i in range(len(s)):
+             if s[i] == '(':
+                 stack.append(i)
+             else:
+                 stack.pop()
+                 if not stack:
+                # If stack is empty, push the current index to serve as the new base
+                     stack.append(i)  
+                 else:
+                # Calculate the length of the valid parentheses substring
+                     max_length = max(max_length, i - stack[-1])   
+        return max_length             
+        
+        
