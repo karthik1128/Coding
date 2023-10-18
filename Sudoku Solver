@@ -1,0 +1,23 @@
+class Solution(object):
+    def solveSudoku(self, board):
+        def is_valid(row, col, num):
+        # Check if 'num' is not in the current row, column, and 3x3 sub-box
+             return (
+                 all(board[row][i] != num for i in range(9)) and
+                 all(board[i][col] != num for i in range(9)) and
+                 all(board[row // 3 * 3 + i][col // 3 * 3 + j] != num for i in range(3) for j in range(3))
+             )
+        def solve():
+             for row in range(9):
+                 for col in range(9):
+                     if board[row][col] == '.':
+                         for num in map(str, range(1, 10)):
+                             if is_valid(row, col, num):
+                                 board[row][col] = num
+                                 if solve():  # Recursively try to solve the puzzle
+                                     return True
+                                 board[row][col] = '.'  # Backtrack if the placement doesn't lead to a solution
+                         return False  # No valid digit found for this cell
+             return True  # Entire board is filled
+
+        solve()
