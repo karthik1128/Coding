@@ -1,0 +1,12 @@
+class Solution(object):
+    def getPermutation(self, n, k):
+         result = []
+         candidates = list(range(1, n + 1))
+         k -= 1  # Adjust k to 0-based index
+
+         for i in range(n):
+             # Calculate the index of the current digit in candidates
+             index, k = divmod(k, math.factorial(n - 1 - i))
+             result.append(candidates.pop(index))
+
+         return ''.join(map(str, result))
