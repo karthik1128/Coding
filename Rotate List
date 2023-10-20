@@ -1,0 +1,38 @@
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+         self.val = val
+         self.next = next
+class Solution(object):
+    def rotateRight(self, head, k):
+         if not head or k == 0:
+             return head
+
+         # Find the length of the linked list
+         length = 0
+         current = head
+         while current:
+             length += 1
+             current = current.next
+
+         # Calculate the effective rotation value
+         k = k % length  
+
+         # If effective rotation is zero, return the original linked list
+         if k == 0:
+             return head
+
+         # Find the new tail node after rotation
+         slow = fast = head
+         for _ in range(k):
+             fast = fast.next  
+
+         while fast.next:
+             slow = slow.next
+             fast = fast.next  
+
+         # Update pointers to perform rotation
+         new_head = slow.next
+         slow.next = None
+         fast.next = head
+
+         return new_head 
