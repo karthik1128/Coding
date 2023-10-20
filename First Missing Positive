@@ -1,0 +1,16 @@
+class Solution(object):
+    def firstMissingPositive(self, nums):
+        n = len(nums)
+
+         # Cyclic Sort
+        for i in range(n):
+             while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:
+                 nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+
+        # Find the first position where the element does not match its index
+        for i in range(n):
+             if nums[i] != i + 1:
+                 return i + 1 
+
+         # If all elements are in their correct position, return the next positive integer
+        return n + 1
