@@ -1,0 +1,21 @@
+class Solution(object):
+    def totalNQueens(self, n):
+        def is_not_under_attack(row, col, queens):
+             for queen in queens:
+                 r, c = queen
+                 if row == r or col == c or abs(row - r) == abs(col - c):
+                     return False
+             return True
+
+        def place_queen(row, queens, count):
+             if row == n:
+                 count[0] += 1
+                 return  
+             for col in range(n):
+                 if is_not_under_attack(row, col, queens):
+                     queens.append((row, col))
+                     place_queen(row + 1, queens, count)
+                     queens.pop()  
+        count = [0]
+        place_queen(0, [], count)
+        return count[0]
