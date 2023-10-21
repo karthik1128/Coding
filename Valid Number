@@ -1,0 +1,10 @@
+class Solution(object):
+    def isNumber(self, s):
+         # Define the regular expression pattern for a valid number
+         pattern = re.compile(r'^[+-]?(\d+\.\d*|\.\d+|\d+)([eE][+-]?\d+)?$')
+    
+         # Use the pattern to match the string
+         match = pattern.match(s)
+    
+         # If there is a match, the string is a valid number
+         return bool(match)
