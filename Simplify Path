@@ -1,0 +1,18 @@
+class Solution(object):
+    def simplifyPath(self, path):
+         components = path.split('/')
+         stack = []
+         for component in components:
+             if component == '' or component == '.':
+                 # Ignore empty components and current directory references
+                 continue
+             elif component == '..':
+                 # Move up one level by popping from the stack
+                 if stack:
+                     stack.pop()
+             else:
+                 # Push valid directory names to the stack
+                 stack.append(component)
+         # Construct the simplified path using the stack
+         simplified_path = '/' + '/'.join(stack)
+         return simplified_path 
