@@ -1,0 +1,41 @@
+class Solution(object):
+    def minWindow(self, s, t):
+         if not s or not t:
+             return ""
+
+         # Initialize counters for characters in t
+         target_count = Counter(t)
+         required_chars = len(target_count)
+
+         # Initialize the sliding window and additional counters
+         left, right = 0, 0
+         formed_chars = 0
+         window_count = {}
+
+         # Initialize variables to track the minimum window substring
+         min_len = float('inf')
+         min_window = ""
+         while right < len(s):
+             char = s[right]
+             # Update the window_count dictionary
+             window_count[char] = window_count.get(char, 0) + 1
+
+             # Check if the current character is in the target set and forms a required character
+             if char in target_count and window_count[char] == target_count[char]:
+                 formed_chars += 1
+             # Try to minimize the window by moving the left pointer
+             while formed_chars == required_chars and left <= right:
+                 current_len = right - left + 1 
+                 # Update the minimum window substring if a smaller one is found
+                 if current_len < min_len:
+                     min_len = current_len
+                     min_window = s[left:right + 1]  
+                 # Move the left pointer and update window_count accordingly
+                 left_char = s[left]
+                 window_count[left_char] -= 1
+                 if left_char in target_count and window_count[left_char] < target_count[left_char]:
+                     formed_chars -= 1
+                 left += 1
+             # Expand the window by moving the right pointer
+             right += 1 
+         return min_window
