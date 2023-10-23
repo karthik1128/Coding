@@ -1,0 +1,16 @@
+class Solution(object):
+    def grayCode(self, n):
+        def backtrack(start, path):
+             if len(path) == 2**n:
+                 result.append(path[:])
+                 return
+
+             for i in range(n):
+                 num = start ^ (1 << i)  # Flip the i-th bit
+                 if num not in path:
+                     path.append(num)
+                     backtrack(num, path)
+                     path.pop()
+        result = []
+        backtrack(0, [0])
+        return result[0] 
